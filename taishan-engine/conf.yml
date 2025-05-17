@@ -1,0 +1,37 @@
+heartbeat:
+  port:
+  region: "上海"
+  duration:
+  resources:
+http:
+  address:
+
+redis:
+  address:
+  password:
+  db:
+
+reportRedis:
+  address:
+  password:
+  db:
+
+kafka:
+  address:
+  topic:
+
+mongo:
+  dsn:
+  database:
+
+influxDB:
+  url:
+  org:
+  token:
+  bucket:
+
+ossConfig:
+  AccessKeyID:
+  AccessKeySecret:
+  Endpoint:
+  BucketName:
