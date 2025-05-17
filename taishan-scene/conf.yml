@@ -1,0 +1,47 @@
+http:
+  port: 9001
+
+url:
+  machine: "http://taishan-local.cdfsunrise.com/machine"
+  report: "http://taishan-local.cdfsunrise.com/report"
+  account: "http://taishan-local.cdfsunrise.com/account"
+  task: "http://taishan-local.cdfsunrise.com/task"
+  data: "http://taishan-local.cdfsunrise.com/data"
+
+mysql:
+  username:
+  password:
+  host:
+  port:
+  dbname:
+  charset:
+
+kafka:
+  address:
+  topic:
+
+mongo:
+  dsn:
+  database:
+  pool_size: 20
+
+redis:
+  address:
+  password:
+  db:
+
+redisReport:
+  address:
+  password:
+  db:
+
+ossConfig:
+  AccessKeyID:
+  AccessKeySecret:
+  Endpoint:
+  BucketName:
+
+fsConfig:
+  AppID:
+  AppSecret:
+  ChatGroupID:
