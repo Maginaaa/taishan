@@ -1,0 +1,14 @@
+.DS_Store
+**/*.log
+
+tests/**/coverage/
+
+# Editor directories and files
+.idea
+
+package-lock.json
+yarn.lock
+go.sum
+*_test.go
+go.mod
+conf.yml
