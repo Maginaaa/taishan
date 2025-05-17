@@ -1,11 +1,16 @@
 import request from '@/axios'
-import type { User } from '@/views/Plan/user-data'
 
 const domain = 'account'
 class AccountService {
   async getUserList() {
-    const res: IResponse<Array<User>> = await request.get({ url: `/${domain}/user/list` })
-    return res.data
+    // const res: IResponse<Array<User>> = await request.get({ url: `/${domain}/user/list` })
+    return [
+      {
+        id: 1,
+        name: '简单随风',
+        nickname: '简单随风'
+      }
+    ]
   }
 
   async getUserInfo() {
