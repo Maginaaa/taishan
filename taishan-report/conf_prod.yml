@@ -1,0 +1,30 @@
+http:
+  port: 7002
+url:
+  machine: "http://taishan.cdfsunrise.com/machine"
+  report: "http://taishan.cdfsunrise.com/report"
+  account: "http://taishan.cdfsunrise.com/account"
+redis:
+  address: "r-uf6thv0a8nnlgbc672.redis.rds.aliyuncs.com:6379"
+  password: "p2E!sds)9vAD^6rJw"
+  db: 0
+redisReport:
+  address: "r-uf6thv0a8nnlgbc672.redis.rds.aliyuncs.com:6379"
+  password: "p2E!sds)9vAD^6rJw"
+  db: 0
+mongodb:
+  dsn:
+  database:
+  pool_size:
+mysql:
+  username: "root"
+  password: "p2E!sds)9vAD^6rJw"
+  host: "10.72.248.28"
+  port: 3306
+  dbname: "taishan_prod"
+  charset: "utf8mb4"
+influxDB:
+  url: "http://10.72.248.28:8086"
+  org: "taishan"
+  token: "VFy0MRMrTfXGIfY0PY2z_OpwzieromkNl1zXy0Md2vzWlFQahbt1YUzapg5cXjNDda6wM77xUMxFOv0-AHTsqQ=="
+  bucket: "taishan-prod"

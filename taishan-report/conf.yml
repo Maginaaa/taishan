@@ -1,0 +1,29 @@
+http:
+  port: 7002
+url:
+  machine: "http://taishan-local.cdfsunrise.com/machine"
+  account: "http://taishan-local.cdfsunrise.com/account"
+redis:
+  address: "10.72.78.59:6379"
+  password: "p2E!sds)9vAD^6rJw"
+  db: 1
+redisReport:
+  address: "10.72.78.59:6379"
+  password: "p2E!sds)9vAD^6rJw"
+  db: 1
+mongodb:
+  dsn:
+  database:
+  pool_size:
+mysql:
+  username: "root"
+  password: "p2E!sds)9vAD^6rJw"
+  host: "10.72.248.28"
+  port: 3306
+  dbname: "press_dev"
+  charset: "utf8mb4"
+influxDB:
+  url: "http://10.72.248.28:8086"
+  org: "taishan"
+  token: "VFy0MRMrTfXGIfY0PY2z_OpwzieromkNl1zXy0Md2vzWlFQahbt1YUzapg5cXjNDda6wM77xUMxFOv0-AHTsqQ=="
+  bucket: "taishan-dev"
