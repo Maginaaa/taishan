@@ -20,7 +20,7 @@ var configFile string
 
 func main() {
 
-	flag.StringVar(&configFile, "f", "./conf_prod.yml", "use config file")
+	flag.StringVar(&configFile, "f", "./conf.yml", "use config file")
 	flag.Parse()
 	conf.InitConfig(configFile)
 
