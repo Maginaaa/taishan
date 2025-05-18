@@ -1,0 +1,50 @@
+http:
+  port:
+
+redis:
+  address:
+  password:
+  db:
+
+reportRedis:
+  address:
+  password:
+  db:
+
+kafka:
+  address:
+  topic:
+
+mongo:
+  dsn:
+  database:
+  pool_size:
+
+influxDB:
+  url:
+  org:
+  token:
+  bucket:
+
+ossConfig:
+  AccessKeyID:
+  AccessKeySecret:
+  Endpoint:
+  BucketName: "lefox-test-report"
+
+slsConfig:
+  AccessKeyID:
+  AccessKeySecret:
+  Endpoint:
+
+url:
+  report: "http://taishan-local.cdfsunrise.com/report"
+  account: "http://taishan-local.cdfsunrise.com/account"
+
+mysql:
+  username:
+  password:
+  host:
+  port:
+  dbname:
+  charset:
