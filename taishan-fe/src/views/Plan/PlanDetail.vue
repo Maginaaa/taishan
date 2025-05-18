@@ -882,23 +882,6 @@ getMachineList()
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="管理服务">
-            <el-cascader
-              v-model="plan_info.server_info"
-              :show-all-levels="false"
-              collapse-tags
-              collapse-tags-tooltip
-              :max-collapse-tags="3"
-              :options="namespace_list"
-              :props="cas_props"
-              @change="
-                trackClick({
-                  name: '管理服务',
-                  server_info: plan_info.server_info
-                })
-              "
-            />
-          </el-form-item>
         </el-form>
       </el-tab-pane>
       <!--      <el-tab-pane label="熔断策略" name="press_break_config" />-->
