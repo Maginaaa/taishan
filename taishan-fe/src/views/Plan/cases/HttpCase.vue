@@ -299,12 +299,13 @@ const valueExtract = (type, node) => {
     _variable.key = node.path
     const arr = node.path.split('.')
     const _value = arr[arr.length - 1].replace(/([A-Z](?!ID))/g, '_$1').toUpperCase()
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    let suffix = ''
-    for (let i = 0; i < 6; i++) {
-      suffix += characters.charAt(Math.floor(Math.random() * characters.length))
-    }
-    _variable.value = _value + '_' + suffix
+    // const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    // let suffix = ''
+    // for (let i = 0; i < 6; i++) {
+    //   suffix += characters.charAt(Math.floor(Math.random() * characters.length))
+    // }
+    // _variable.value = _value + '_' + suffix
+    _variable.value = _value
     case_info.variable_form.splice(case_info.variable_form.length - 1, 1)
     case_info.variable_form.push(_variable)
     case_info.variable_form.push({ ...blank_variable })

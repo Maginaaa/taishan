@@ -41,7 +41,3 @@ ossConfig:
   Endpoint:
   BucketName:
 
-fsConfig:
-  AppID:
-  AppSecret:
-  ChatGroupID:

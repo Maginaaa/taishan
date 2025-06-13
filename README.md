@@ -54,7 +54,10 @@
 ![img.png](readme-img/report.png)
 
 ## 🚦 快速开始
-1. 执行scene/sql文件内所有文件，生成对应mysql表
-2. 配置各项目的conf.yml
-3. 前端启动 node install && pnpm dev
-4. 服务端启动，各项目跟目录go run main.go
+1. 准备相应中间件
+   1. 必须: mysql、redis、kafka、influxDB 
+   2. 非必须: MongoDB (影响采样日志查询)、OSS(影响参数化文件使用)
+2. 执行scene/sql文件内所有文件，生成对应mysql表
+3. 配置各项目的conf.yml
+4. 前端启动 node install && pnpm dev
+5. 服务端启动，各项目跟目录go run main.go
