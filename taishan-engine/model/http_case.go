@@ -6,6 +6,7 @@ import (
 	"engine/internal/biz/log"
 	"engine/internal/utils"
 	"fmt"
+	"github.com/bytedance/sonic"
 	"github.com/valyala/fasthttp"
 	"reflect"
 	"strconv"
@@ -227,7 +228,7 @@ func (h *HttpCase) DoRequest() {
 			})
 		})
 		hr.ResponseContent = string(resp.Body())
-		_ = json.Unmarshal(resp.Body(), &hr.ResponseContentInterface) // 前置反序列化，cpu消耗由19.7%降低至6.7%
+		_ = sonic.Unmarshal(resp.Body(), &hr.ResponseContentInterface) // 前置反序列化，cpu消耗由19.7%降低至6.7%
 		hr.StatusCode = resp.StatusCode()
 		// 响应码>=400时，视为请求失败
 		if resp.StatusCode() < 400 {
