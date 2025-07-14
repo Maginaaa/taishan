@@ -2,7 +2,6 @@ package model
 
 import (
 	"crypto/tls"
-	"encoding/json"
 	"engine/internal/biz/log"
 	"engine/internal/utils"
 	"fmt"
@@ -153,15 +152,15 @@ func (h *HttpCase) DeepCopy() (dst HttpCase) {
 }
 
 func (h *HttpCase) Unmarshal(cs *SceneCase) {
-	arr, err := json.Marshal(cs.Extend)
+	arr, err := sonic.Marshal(cs.Extend)
 	if err != nil {
-		log.Logger.Error("json.Marshal err", err)
+		log.Logger.Error("sonic.Marshal err", err)
 		return
 	}
-	err = json.Unmarshal(arr, &h)
+	err = sonic.Unmarshal(arr, &h)
 	h.CaseID = cs.CaseID
 	if err != nil {
-		log.Logger.Error("json.Unmarshal err", err)
+		log.Logger.Error("sonic.Unmarshal err", err)
 		return
 	}
 }
@@ -443,7 +442,7 @@ func anyToStr(i interface{}) string {
 	case reflect.Bool:
 		return strconv.FormatBool(v.Bool())
 	case reflect.Slice, reflect.Map, reflect.Struct, reflect.Array:
-		str, _ := json.Marshal(i)
+		str, _ := sonic.Marshal(i)
 		return string(str)
 	default:
 		return ""
