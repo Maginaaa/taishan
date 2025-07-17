@@ -56,7 +56,7 @@ getUserList()
 
 onActivated(() => {
   getAllPlan()
-  reportSearchRef.value.searchReportList()
+  search.time = new Date().getTime()
 })
 </script>
 

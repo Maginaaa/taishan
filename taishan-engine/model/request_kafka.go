@@ -1,12 +1,12 @@
 package model
 
 import (
-	"encoding/json"
 	"engine/config"
 	"engine/internal/biz/log"
 	"engine/middleware"
 	"fmt"
 	"github.com/Shopify/sarama"
+	"github.com/bytedance/sonic"
 	"sort"
 	"strings"
 	"sync"
@@ -43,6 +43,10 @@ func SendKafkaMsg(dataMsgCh chan *ResultDataMsg, partitionId int32) {
 
 	planTestResultDataMsg := new(PlanTestResultDataMsg)
 	caseRequestTimeListMap := make(map[int32]RequestTimeList)
+	snapshotCh := make(chan struct {
+		planTestResultDataMsg  *PlanTestResultDataMsg
+		caseRequestTimeListMap map[int32]RequestTimeList
+	}, 100)
 
 	// requestTimeListMap的读写锁
 	mu := &sync.Mutex{}
@@ -64,24 +68,18 @@ func SendKafkaMsg(dataMsgCh chan *ResultDataMsg, partitionId int32) {
 					continue
 				}
 				mu.Lock()
-				for _, sceneResult := range planTestResultDataMsg.SceneResults {
-					for caseId, caseResult := range sceneResult.CaseResults {
-						requestTimeList := caseRequestTimeListMap[caseId]
-						sort.Sort(requestTimeList)
-						caseResult.MaxRequestTime = float64(requestTimeList[len(requestTimeList)-1])
-						caseResult.MinRequestTime = float64(requestTimeList[0])
-						caseResult.FiftyRequestTimeLineValue = float64(requestTimeList[len(requestTimeList)/2])
-						caseResult.NinetyRequestTimeLineValue = TimeLineCalculate(90, requestTimeList)
-						caseResult.NinetyFiveRequestTimeLineValue = TimeLineCalculate(95, requestTimeList)
-						caseResult.NinetyNineRequestTimeLineValue = TimeLineCalculate(99, requestTimeList)
-
-						caseResult.ActualConcurrency = sceneResult.TargetConcurrency
-					}
-				}
-				sendMsg(partitionId, planTestResultDataMsg.ToByte())
+				var planCopy *PlanTestResultDataMsg
+				_ = deepCopy(planTestResultDataMsg, &planCopy)
+				var caseMapCopy map[int32]RequestTimeList
+				_ = deepCopy(caseRequestTimeListMap, &caseMapCopy)
+				snapshotCh <- struct {
+					planTestResultDataMsg  *PlanTestResultDataMsg
+					caseRequestTimeListMap map[int32]RequestTimeList
+				}{planCopy, caseMapCopy}
 				if planTestResultDataMsg.End {
 					log.Logger.Info(fmt.Sprintf("机器ip: %s，计划: %d，报告: %d, 测试数据向kafka写入完成！本次任务有： %d 条数据", middleware.LocalIp, planTestResultDataMsg.PlanID, planTestResultDataMsg.ReportID, index))
 					timer.Stop()
+					close(snapshotCh)
 					return
 				}
 				for _, sceneResult := range planTestResultDataMsg.SceneResults {
@@ -126,8 +124,8 @@ func SendKafkaMsg(dataMsgCh chan *ResultDataMsg, partitionId int32) {
 				case TypeHttpResultData:
 					mu.Lock()
 					if msg.GlobalInfo.NeedSampling {
-						dataMs, _ := json.Marshal(msg)
-						go SendSamplingMsg(dataMs)
+						dataMs, _ := sonic.Marshal(msg)
+						go sendMsg(SamplingDataPartition, dataMs)
 					}
 					if _, hasCase := planTestResultDataMsg.SceneResults[msg.SceneInfo.SceneID].CaseResults[msg.HttpResultDataMsg.CaseID]; !hasCase {
 						planTestResultDataMsg.SceneResults[msg.SceneInfo.SceneID].CaseResults[msg.HttpResultDataMsg.CaseID] = &ApiTestResultDataMsg{
@@ -179,6 +177,26 @@ func SendKafkaMsg(dataMsgCh chan *ResultDataMsg, partitionId int32) {
 			}
 		}
 	}()
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for snapshot := range snapshotCh {
+			for _, sceneResult := range snapshot.planTestResultDataMsg.SceneResults {
+				for caseId, caseResult := range sceneResult.CaseResults {
+					requestTimeList := snapshot.caseRequestTimeListMap[caseId]
+					sort.Sort(requestTimeList)
+					caseResult.MaxRequestTime = float64(requestTimeList[len(requestTimeList)-1])
+					caseResult.MinRequestTime = float64(requestTimeList[0])
+					caseResult.FiftyRequestTimeLineValue = float64(requestTimeList[len(requestTimeList)/2])
+					caseResult.NinetyRequestTimeLineValue = TimeLineCalculate(90, requestTimeList)
+					caseResult.NinetyFiveRequestTimeLineValue = TimeLineCalculate(95, requestTimeList)
+					caseResult.NinetyNineRequestTimeLineValue = TimeLineCalculate(99, requestTimeList)
+					caseResult.ActualConcurrency = sceneResult.TargetConcurrency
+				}
+			}
+			go sendMsg(partitionId, snapshot.planTestResultDataMsg.ToByte())
+		}
+	}()
 
 	wg.Wait()
 	return
@@ -188,18 +206,6 @@ func sendMsg(partitionId int32, msg []byte) (err error) {
 	proMsg := &sarama.ProducerMessage{}
 	proMsg.Topic = config.Conf.Kafka.TopIc
 	proMsg.Partition = partitionId
-	proMsg.Value = sarama.ByteEncoder(msg)
-	_, _, err = kafkaProducer.SendMessage(proMsg)
-	if err != nil {
-		log.Logger.Error(fmt.Sprintf("机器ip:%s, 向kafka发送消息失败: %s", middleware.LocalIp, err.Error()))
-	}
-	return
-}
-
-func SendSamplingMsg(msg []byte) (err error) {
-	proMsg := &sarama.ProducerMessage{}
-	proMsg.Topic = config.Conf.Kafka.TopIc
-	proMsg.Partition = SamplingDataPartition
 	proMsg.Value = sarama.ByteEncoder(msg)
 	_, _, err = kafkaProducer.SendMessage(proMsg)
 	if err != nil {
@@ -218,4 +224,13 @@ func SendPrefixSceneMsg(msg []byte) (err error) {
 		log.Logger.Error(fmt.Sprintf("机器ip:%s, 向kafka发送消息失败: %s", middleware.LocalIp, err.Error()))
 	}
 	return
+}
+
+// 2次/s的调用频率，可直接使用序列化/反序列化进行deepCopy
+func deepCopy(src, dst interface{}) error {
+	data, err := sonic.Marshal(src)
+	if err != nil {
+		return err
+	}
+	return sonic.Unmarshal(data, dst)
 }
