@@ -651,6 +651,10 @@ func PlanExecute(ctx *gin.Context, planId int32) (reportId int32, err error) {
 		log.Logger.Error("logic.plan.PlanExecute.getPressInfo(), err:", err)
 		return 0, err
 	}
+	if len(scenePressInfo) == 0 {
+		log.Logger.Error("logic.plan.PlanExecute.getPressInfo(): 有效场景数为0，不执行")
+		return 0, errors.New("有效场景数为0，不执行")
+	}
 
 	// 获取参数化文件
 	fileInfo, err := GetPlanDataSource(ctx, planId)
