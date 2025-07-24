@@ -28,7 +28,6 @@ import OperationLog from '@/views/Plan/plan/OperationLog.vue'
 import { emptyPlanInfo, pressGraphOptions, TreeNode } from '@/views/Plan/plan-data'
 import { baseReportSearch, ReportSearchReq } from '@/views/Report/report-data'
 import type { SceneInfo } from '@/views/Plan/scene/case-data'
-import { trackClick } from '@/point/utils.js'
 import TagService from '@/api/scene/tag'
 
 const router = useRouter()
@@ -130,7 +129,6 @@ const preEditTitle = () => {
 
 const active_tab = ref('scene_config')
 const chooseHeaderTabs = (tabName: string) => {
-  trackClick({ name: 'tab点击', tab_name: tabName })
   if (tabName === 'press_config') {
     drawPressGraph()
   }
@@ -171,10 +169,6 @@ let optionsData = reactive<EChartsOption>(pressGraphOptions) as EChartsOption
 const chartsRef = ref()
 
 const drawPressGraph = () => {
-  trackClick({
-    name: '切换压测模式',
-    tab_name: active_tab.value
-  })
   checkGraphParam()
   if (active_tab.value !== 'press_config') {
     return
@@ -813,12 +807,6 @@ getMachineList()
                 <el-switch
                   v-model="plan_info.task_info.enable"
                   style="--el-switch-on-color: #13ce66"
-                  @change="
-                    trackClick({
-                      name: '修改定时任务',
-                      task_info: plan_info.task_info
-                    })
-                  "
                 />
               </el-col>
               <el-col :span="21">
@@ -836,30 +824,12 @@ getMachineList()
             </el-row>
           </el-form-item>
           <el-form-item label="容量采样">
-            <el-switch
-              v-model="plan_info.capacity_switch"
-              style="--el-switch-on-color: #13ce66"
-              @change="
-                trackClick({
-                  name: '容量采样',
-                  capacity_switch: plan_info.capacity_switch
-                })
-              "
-            />
+            <el-switch v-model="plan_info.capacity_switch" style="--el-switch-on-color: #13ce66" />
           </el-form-item>
           <el-form-item label="采样策略">
             <el-row style="width: 500px">
               <el-col :span="8">
-                <el-select
-                  v-model="plan_info.sampling_info.sampling_type"
-                  style="width: 140px"
-                  @change="
-                    trackClick({
-                      name: '采样策略',
-                      sampling_info: plan_info.sampling_info
-                    })
-                  "
-                >
+                <el-select v-model="plan_info.sampling_info.sampling_type" style="width: 140px">
                   <el-option
                     v-for="item in sampling_type_list"
                     :key="item.value"
@@ -891,12 +861,6 @@ getMachineList()
               :max-collapse-tags="3"
               :options="namespace_list"
               :props="cas_props"
-              @change="
-                trackClick({
-                  name: '管理服务',
-                  server_info: plan_info.server_info
-                })
-              "
             />
           </el-form-item>
         </el-form>

@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import FileService from '@/api/scene/file'
 import { ElMessage } from 'element-plus'
-import { trackClick } from '@/point/utils.js'
 
 const fileService = new FileService()
 
@@ -113,10 +112,6 @@ const convertByte = (val) => {
 
 const changeVariableReadType = (cmd, row) => {
   row.read_type = cmd
-  trackClick({
-    name: '修改读取方式',
-    row: row
-  })
   updateColumn(row)
 }
 
