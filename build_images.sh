@@ -12,7 +12,6 @@ GO_PROJECTS=(
   "taishan-machine"
   "taishan-report"
   "taishan-scene"
-  "taishan-task"
   "taishan-engine"
 )
 
