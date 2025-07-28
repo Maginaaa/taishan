@@ -5,15 +5,6 @@ networks:
     driver: bridge
 
 services:
-  taishan-account:
-    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-account:1.0.1
-    container_name: taishan-account
-    ports:
-      - "6001:6001"
-    networks:
-      - taishan
-    restart: unless-stopped
-
   taishan-collector:
     image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-collector:1.0.1
     container_name: taishan-collector
@@ -55,15 +46,6 @@ services:
     container_name: taishan-scene
     ports:
       - "6006:6006"
-    networks:
-      - taishan
-    restart: unless-stopped
-
-  taishan-task:
-    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-task:1.0.1
-    container_name: taishan-task
-    ports:
-      - "6007:6007"
     networks:
       - taishan
     restart: unless-stopped
