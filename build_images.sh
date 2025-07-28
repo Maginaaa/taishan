@@ -26,10 +26,6 @@ do
   # 进入项目目录
   cd "$WORKSPACE_ROOT/$PROJECT" || exit
 
-  # 执行go build
-  echo "执行 go build..."
-  CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go build -o "$PROJECT" main.go
-
   # 执行docker build
   echo "执行 docker build..."
   docker build --platform linux/amd64 -t "registry.cn-guangzhou.aliyuncs.com/your-repo/$PROJECT:$TAG" .
