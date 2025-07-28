@@ -15,9 +15,6 @@ import { setupGlobCom } from '@/components'
 // 引入element-plus
 import { setupElementPlus } from '@/plugins/elementPlus'
 
-import { setupTrackClickDirective } from '@/point/track_click';
-
-
 // 引入全局样式
 import '@/styles/index.less'
 
@@ -49,8 +46,6 @@ const setupAll = async () => {
   setupRouter(app)
 
   setupPermission(app)
-
-  setupTrackClickDirective(app)
 
   app.mount('#app')
 }

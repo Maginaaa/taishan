@@ -10,7 +10,6 @@ import { useRouter } from 'vue-router'
 import Pinyin from 'pinyin-match'
 import type { User } from '@/views/Plan/user-data'
 import { OperationType } from '@/constants'
-import { trackClick } from '@/point/utils.js'
 import TagService from '@/api/scene/tag'
 
 const router = useRouter()
@@ -362,13 +361,7 @@ onActivated(() => {
         :page-sizes="[10, 20, 50]"
         layout="total, sizes, prev, pager, next, jumper "
         :total="total"
-        @change="
-          searchPlanList(),
-            trackClick({
-              name: '翻页',
-              search
-            })
-        "
+        @change="searchPlanList"
       />
     </div>
   </ContentWrap>

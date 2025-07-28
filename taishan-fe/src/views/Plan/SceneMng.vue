@@ -14,7 +14,6 @@ import VariableTable from '@/views/Plan/component/VariableTable.vue'
 import DataExport from '@/views/Plan/scene/DataExport.vue'
 import { TreeNode } from '@/views/Plan/plan-data'
 import PlanService from '@/api/scene/plan'
-import { trackClick } from '@/point/utils.js'
 
 const sceneService = new SceneService()
 const caseService = new CaseService()
@@ -38,11 +37,6 @@ const emptyScene = {
 }
 
 const operateScene = async (tp, scene) => {
-  trackClick({
-    name: '场景操作',
-    operation_type: tp,
-    scene_id: scene.scene_id
-  })
   if (scene) {
     scene.plan_id = props.planId
   }

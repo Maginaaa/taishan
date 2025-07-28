@@ -3,7 +3,6 @@ import { ParamsForm, PlanInfo } from '@/views/Plan/plan-data'
 import { ref, unref } from 'vue'
 import PlanService from '@/api/scene/plan'
 import DataSourceManage from '@/views/Plan/plan/DataSourceManage.vue'
-import { trackClick } from '@/point/utils.js'
 
 const plan_info = defineModel<PlanInfo | any>()
 const planService = new PlanService()
@@ -51,17 +50,10 @@ const headerSuggestions = (queryString, cb) => {
     : header_suggestions
   cb(res)
 }
-
-const tabChange = (val) => {
-  trackClick({
-    name: '数据配置',
-    tab_name: val
-  })
-}
 </script>
 
 <template>
-  <el-tabs v-model="active_tab" @tab-change="tabChange">
+  <el-tabs v-model="active_tab">
     <el-tab-pane label="参数文件" name="variable_file" class="variable-file-container">
       <data-source-manage :plan-id="plan_info.plan_id" />
     </el-tab-pane>

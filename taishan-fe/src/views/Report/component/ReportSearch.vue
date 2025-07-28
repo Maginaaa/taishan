@@ -4,7 +4,6 @@ import { ref, unref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import ReportService from '@/api/scene/report'
 import { Icon } from '@/components/Icon'
-import { trackClick } from '@/point/utils.js'
 
 const router = useRouter()
 
@@ -159,13 +158,7 @@ watch(
       :page-sizes="[10, 20, 50]"
       layout="total, sizes, prev, pager, next, jumper "
       :total="total"
-      @change="
-        searchReportList(),
-          trackClick({
-            name: '翻页',
-            search
-          })
-      "
+      @change="searchReportList"
     />
   </div>
 </template>
