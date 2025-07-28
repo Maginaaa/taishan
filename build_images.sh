@@ -6,7 +6,6 @@ TAG=1.0.1
 
 # 定义需要构建的Go项目列表
 GO_PROJECTS=(
-  "taishan-account"
   "taishan-collector"
   "taishan-data"
   "taishan-machine"
