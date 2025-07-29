@@ -1,0 +1,62 @@
+# docker-compose.yml
+version: '3.8'
+networks:
+  taishan:
+    driver: bridge
+
+services:
+  taishan-collector:
+    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-collector:1.0.1
+    container_name: taishan-collector
+    ports:
+      - "6002:6002"
+    networks:
+      - taishan
+    restart: unless-stopped
+
+  taishan-data:
+    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-data:1.0.1
+    container_name: taishan-data
+    ports:
+      - "6003:6003"
+    networks:
+      - taishan
+    restart: unless-stopped
+
+  taishan-machine:
+    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-machine:1.0.1
+    container_name: taishan-machine
+    ports:
+      - "6004:6004"
+    networks:
+      - taishan
+    restart: unless-stopped
+
+  taishan-report:
+    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-report:1.0.1
+    container_name: taishan-report
+    ports:
+      - "6005:6005"
+    networks:
+      - taishan
+    restart: unless-stopped
+
+  taishan-scene:
+    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-scene:1.0.1
+    container_name: taishan-scene
+    ports:
+      - "6006:6006"
+    networks:
+      - taishan
+    restart: unless-stopped
+
+  taishan-fe:
+    image: registry.cn-guangzhou.aliyuncs.com/your-repo/taishan-fe:1.0.1
+    container_name: taishan-fe
+    ports:
+      - "80:80"
+    networks:
+      - taishan
+    restart: unless-stopped
+
+
