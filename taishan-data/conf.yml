@@ -32,7 +32,7 @@ ossConfig:
   Endpoint:
   BucketName: "lefox-test-report"
 
-# aliyun sls配置
+# aliyun sls配置，开源版不用填
 slsConfig:
   AccessKeyID:
   AccessKeySecret:
