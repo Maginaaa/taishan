@@ -1,5 +1,5 @@
 http:
-  port:
+  port: 6003
 
 redis:
   address:
@@ -32,14 +32,15 @@ ossConfig:
   Endpoint:
   BucketName: "lefox-test-report"
 
+# aliyun sls配置
 slsConfig:
   AccessKeyID:
   AccessKeySecret:
   Endpoint:
 
-url:
-  report: "http://taishan-local.cdfsunrise.com/report"
-  account: "http://taishan-local.cdfsunrise.com/account"
+# url:
+#   report: "http://taishan-local.cdfsunrise.com/report"
+#   account: "http://taishan-local.cdfsunrise.com/account"
 
 mysql:
   username:
