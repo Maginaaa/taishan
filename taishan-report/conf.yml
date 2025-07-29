@@ -1,5 +1,5 @@
 http:
-  port: 6005  // 与docker-compose、fe的nginx对应修改
+  port: 6005  # 与docker-compose、fe的nginx对应修改
 url:
   machine: http://localhost:6004
   # account: http://localhost:6001
