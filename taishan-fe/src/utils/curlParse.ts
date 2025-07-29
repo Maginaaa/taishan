@@ -35,7 +35,11 @@ export function curlParse(s: string): HttpCaseExtend | undefined {
         state = 'form'
         break
 
-      case arg == '-d' || arg == '--data' || arg == '--data-ascii' || arg == '--data-raw':
+      case arg == '-d' ||
+        arg == '--data' ||
+        arg == '--data-ascii' ||
+        arg == '--data-raw' ||
+        arg == '--data-binary':
         state = 'data'
         break
 
@@ -119,7 +123,7 @@ export function curlParse(s: string): HttpCaseExtend | undefined {
             })
             out.body = {
               body_type: 'json',
-              body_value: arg
+              body_value: unescapeJsonString(arg)
             }
             state = ''
             break
@@ -138,7 +142,7 @@ export function curlParse(s: string): HttpCaseExtend | undefined {
           case 'cookie':
             out.headers_form.push({
               enable: true,
-              key: 'Set-Cookie',
+              key: 'Cookie',
               value: arg
             })
             state = ''
@@ -227,4 +231,17 @@ function scan(string, pattern, callback) {
     }
   }
   return result
+}
+
+function unescapeJsonString(str) {
+  if (!str) return str
+
+  // 处理JSON字符串中的常见转义字符
+  return str
+    .replace(/\\"/g, '"') // 反转义双引号
+    .replace(/\\'/g, "'") // 反转义单引号
+    .replace(/\\\\/g, '\\') // 反转义反斜杠
+    .replace(/\\n/g, '\n') // 反转义换行符
+    .replace(/\\r/g, '\r') // 反转义回车符
+    .replace(/\\t/g, '\t') // 反转义制表符
 }
