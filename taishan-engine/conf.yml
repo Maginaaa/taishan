@@ -1,10 +1,10 @@
 heartbeat:
-  port:
+  port: 8002
   region: "上海"
-  duration:
-  resources:
+  duration: 5
+  resources: 5
 http:
-  address:
+  address: 当前机器ip:8002 // 8002是固定端口，ip地址不可以填localhost/0.0.0.0/127.0.0.1
 
 redis:
   address:
