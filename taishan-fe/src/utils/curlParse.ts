@@ -123,7 +123,7 @@ export function curlParse(s: string): HttpCaseExtend | undefined {
             })
             out.body = {
               body_type: 'json',
-              body_value: unescapeJsonString(arg)
+              body_value: arg
             }
             state = ''
             break
@@ -203,7 +203,15 @@ function shellSplit(line) {
       if (garbage !== undefined) {
         throw new Error('Unmatched quote')
       }
-      field += word || (sq || dq || escape).replace(/\\(?=.)/, '')
+      if (word) {
+        field += word
+      } else if (sq) {
+        // 单引号内容保持原样，不处理转义字符
+        field += sq
+      } else if (dq || escape) {
+        // 双引号内容和转义字符需要处理转义
+        field += (dq || escape).replace(/\\(?=.)/, '')
+      }      
       if (seperator !== undefined) {
         words.push(field)
         field = ''
@@ -231,17 +239,4 @@ function scan(string, pattern, callback) {
     }
   }
   return result
-}
-
-function unescapeJsonString(str) {
-  if (!str) return str
-
-  // 处理JSON字符串中的常见转义字符
-  return str
-    .replace(/\\"/g, '"') // 反转义双引号
-    .replace(/\\'/g, "'") // 反转义单引号
-    .replace(/\\\\/g, '\\') // 反转义反斜杠
-    .replace(/\\n/g, '\n') // 反转义换行符
-    .replace(/\\r/g, '\r') // 反转义回车符
-    .replace(/\\t/g, '\t') // 反转义制表符
 }
