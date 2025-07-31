@@ -203,15 +203,9 @@ function shellSplit(line) {
       if (garbage !== undefined) {
         throw new Error('Unmatched quote')
       }
-      if (word) {
-        field += word
-      } else if (sq) {
-        // 单引号内容保持原样，不处理转义字符
-        field += sq
-      } else if (dq || escape) {
-        // 双引号内容和转义字符需要处理转义
-        field += (dq || escape).replace(/\\(?=.)/, '')
-      }      
+      field += (word || sq || dq || escape).replace(/\\(.)/g, (match, char) =>
+        char === '/' ? match : char
+      )
       if (seperator !== undefined) {
         words.push(field)
         field = ''
