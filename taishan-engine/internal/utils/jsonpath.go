@@ -383,6 +383,9 @@ func getIdx(obj interface{}, idx int) (interface{}, error) {
 }
 
 func getRange(obj, frm, to interface{}) (interface{}, error) {
+	if obj == nil {
+		return nil, fmt.Errorf("object is nil")
+	}
 	switch reflect.TypeOf(obj).Kind() {
 	case reflect.Slice:
 		length := reflect.ValueOf(obj).Len()
