@@ -35,7 +35,11 @@ export function curlParse(s: string): HttpCaseExtend | undefined {
         state = 'form'
         break
 
-      case arg == '-d' || arg == '--data' || arg == '--data-ascii' || arg == '--data-raw':
+      case arg == '-d' ||
+        arg == '--data' ||
+        arg == '--data-ascii' ||
+        arg == '--data-raw' ||
+        arg == '--data-binary':
         state = 'data'
         break
 
@@ -138,7 +142,7 @@ export function curlParse(s: string): HttpCaseExtend | undefined {
           case 'cookie':
             out.headers_form.push({
               enable: true,
-              key: 'Set-Cookie',
+              key: 'Cookie',
               value: arg
             })
             state = ''
@@ -199,7 +203,9 @@ function shellSplit(line) {
       if (garbage !== undefined) {
         throw new Error('Unmatched quote')
       }
-      field += word || (sq || dq || escape).replace(/\\(?=.)/, '')
+      field += (word || sq || dq || escape).replace(/\\(.)/g, (match, char) =>
+        char === '/' ? match : char
+      )
       if (seperator !== undefined) {
         words.push(field)
         field = ''

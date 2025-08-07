@@ -89,7 +89,7 @@ func SessionAuthMiddleWare() gin.HandlerFunc {
 		//	})
 		//	return
 		//}
-		id := 1
+		id = int32(1)
 		name := "简单随风"
 		// 将用户ID和用户名写入上下文中
 		ctx.Set("userID", id)

@@ -1,12 +1,12 @@
 http:
-  port: 9001
+  port: 6006
 
 url:
-  machine: "http://taishan-local.cdfsunrise.com/machine"
-  report: "http://taishan-local.cdfsunrise.com/report"
-  account: "http://taishan-local.cdfsunrise.com/account"
-  task: "http://taishan-local.cdfsunrise.com/task"
-  data: "http://taishan-local.cdfsunrise.com/data"
+  machine: "http://localhost:6004"
+  report: "http://localhost:6005"
+  # account: "http://localhost:6001"
+  # task: "http://localhost:6007"
+  data: "http://localhost:6003"
 
 mysql:
   username:

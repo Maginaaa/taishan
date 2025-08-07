@@ -31,7 +31,7 @@ func InitRedisClient() {
 			Password: config.Conf.ReportRedis.Password,
 			DB:       config.Conf.ReportRedis.DB,
 		})
-	_, err = RDB.Ping().Result()
+	_, err = ReportRdb.Ping().Result()
 	if err != nil {
 		log.Fatal("model.request_redis.InitRedisClient ReportRedis连接失败", "err", err.Error())
 	}

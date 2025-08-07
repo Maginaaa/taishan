@@ -1,11 +1,11 @@
-heartbeat:
-  port:
-  region:
-  duration:
-  resources:
+# heartbeat:
+#   port:
+#   region:
+#   duration:
+#   resources:
 
 http:
-  address:                              #本服务host
+  address: localhost:6002                              #本服务host
 
 redis:
   address:

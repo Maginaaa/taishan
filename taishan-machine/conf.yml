@@ -1,5 +1,5 @@
 http:
-  port:
+  port: 6004
 
 redis:
   address:

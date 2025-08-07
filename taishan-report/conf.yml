@@ -1,8 +1,8 @@
 http:
-  port: 7002
+  port: 6005  # 与docker-compose、fe的nginx对应修改
 url:
-  machine:
-  account:
+  machine: http://localhost:6004
+  # account: http://localhost:6001
 redis:
   address:
   password:
