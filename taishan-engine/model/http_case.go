@@ -117,6 +117,7 @@ func (h *HttpCase) DeepCopy() (dst HttpCase) {
 		VariableForm:  make([]VariableForm, 0),
 		RallyPoint:    &RallyPoint{},
 		WaitingConfig: &WaitingConfig{},
+		OvertimeConfig: &OvertimeConfig{},
 		ResponseData:  &HttpResponse{},
 	}
 	for _, param := range h.ParamsForm {
@@ -147,6 +148,9 @@ func (h *HttpCase) DeepCopy() (dst HttpCase) {
 	}
 	if h.WaitingConfig != nil {
 		*dst.WaitingConfig = *h.WaitingConfig
+	}
+	if h.OvertimeConfig != nil {
+		*dst.OvertimeConfig = *h.OvertimeConfig
 	}
 	return
 }
@@ -262,7 +266,7 @@ func newKeepAlive() {
 			MaxConnsPerHost:           10000,
 			MaxIdemponentCallAttempts: 1,
 			MaxIdleConnDuration:       time.Duration(5) * time.Second,
-			ReadTimeout:               time.Duration(5) * time.Second,
+			// ReadTimeout:               time.Duration(5) * time.Second, // 超时时间由DoRequest内部req.SetTimeout控制
 			WriteTimeout:              time.Duration(5) * time.Second,
 		}
 	})
