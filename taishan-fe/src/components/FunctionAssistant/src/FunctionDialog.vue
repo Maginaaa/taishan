@@ -75,7 +75,7 @@ const function_list = [
       {
         function_name: '随机字符串',
         function_key: '__RandomStr',
-        function_temp: '__RandomInt(param1, param2, param3)'
+        function_temp: '__RandomStr(param1, param2, param3)'
       },
       {
         function_name: '随机选择字符串',
