@@ -6,6 +6,10 @@
 ![Node Version](https://img.shields.io/badge/node-18.16.0-green)
 ![Vue Version](https://img.shields.io/badge/vue-3.x-brightgreen)
 
+## 重要！！
+暂停源码开源，有需要可vx联系
+![img.png](readme-img/qr-code.jpg)
+
 ## 🌟 项目简介
 
 泰山是一款高性能、易用的接口压测平台，致力于帮助开发者快速评估系统性能与稳定性。提供实时监控、压测报告生成、异常告警等功能，并可通过分布式部署实现高并发场景模拟。用户可通过可视化界面轻松配置压测任务，结合数据分析工具，精准定位性能瓶颈，为系统优化提供可靠依据。泰山压测平台适用于API、微服务及全链路压测，助力企业提升系统可靠性，保障业务平稳运行。
@@ -59,5 +63,5 @@
    2. 非必须: MongoDB (影响采样日志查询)、OSS(影响参数化文件使用)
 2. 执行scene/sql文件内所有文件，生成对应mysql表
 3. 配置各项目的conf.yml
-4. 前端启动 node install && pnpm dev
+4. 前端启动 pnpm install && pnpm dev
 5. 服务端启动，各项目跟目录go run main.go
