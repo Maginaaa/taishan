@@ -1,2 +1,0 @@
-# Taishan Collector
-

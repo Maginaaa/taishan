@@ -1,7 +1,0 @@
-.idea
-.vscode
-.Ds_Store
-local.yaml
-go.sum
-
-test/

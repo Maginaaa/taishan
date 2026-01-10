@@ -1,7 +1,0 @@
-http:
-  port: 6004
-
-redis:
-  address:
-  password:
-  db:
